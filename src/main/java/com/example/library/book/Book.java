@@ -19,13 +19,14 @@ public class Book {
     @ManyToOne
     private Bookshelf bookshelf;
 
-    public Book(String title, String description, String authorName, String authorLastname, BookGenre genre, int numberOfPages) {
+    public Book(String title, String description, String authorName, String authorLastname, BookGenre genre, int numberOfPages, Bookshelf bookshelf) {
         this.title = title;
         this.description = description;
         this.authorName = authorName;
         this.authorLastname = authorLastname;
         this.genre = genre;
         this.numberOfPages = numberOfPages;
+        this.bookshelf = bookshelf;
     }
 
     public Book() {
@@ -85,5 +86,13 @@ public class Book {
 
     public void setNumberOfPages(int numberOfPages) {
         this.numberOfPages = numberOfPages;
+    }
+
+    public Bookshelf getBookshelf() {
+        return bookshelf;
+    }
+
+    public void setBookshelf(Bookshelf bookshelf) {
+        this.bookshelf = bookshelf;
     }
 }
