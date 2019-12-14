@@ -1,6 +1,11 @@
 package com.example.library.bookshelf;
 
+import com.example.library.book.Book;
+import com.example.library.book.BookResponse;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class BookshelfService {
@@ -12,5 +17,15 @@ public class BookshelfService {
         this.repository = repository;
         this.bookshelfEntityToResponseMapper = bookshelfEntityToResponseMapper;
         this.bookshelfInputToEntityMapper = bookshelfInputToEntityMapper;
+    }
+
+    public List<BookshelfResponse> getAllBookshelves(){
+        Iterable<Bookshelf> bookIterable = repository.findAll();
+        List<BookshelfResponse> bookshelvesToReturn = new ArrayList<>();
+        for (Bookshelf bookshelf : bookIterable) {
+            bookshelvesToReturn.add(bookshelfEntityToResponseMapper.apply(bookshelf));
+        }
+        return bookshelvesToReturn;
+
     }
 }
