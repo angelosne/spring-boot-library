@@ -67,8 +67,8 @@ public class BookService {
 
         else {
             Book bookToDelete = retrievedBook.get();
-            repository.delete(bookToDelete);
-        return bookEntityToResponseMapper.apply(bookToDelete);
+            repository.deleteById(id);
+            return bookEntityToResponseMapper.apply(bookToDelete);
         }
     }
 

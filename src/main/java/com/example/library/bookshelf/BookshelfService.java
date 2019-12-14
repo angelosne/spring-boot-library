@@ -52,5 +52,17 @@ public class BookshelfService {
         }
     }
 
+    public BookshelfResponse deleteBookshelf(long id) throws BookshelfNotFoundException {
+        Optional<Bookshelf> retrievedBookshelf = repository.findById(id);
+        if (retrievedBookshelf.isEmpty())
+            throw new BookshelfNotFoundException();
+        else {
+            Bookshelf bookshelfToDelete = retrievedBookshelf.get();
+            repository.deleteById(id);
+            return bookshelfEntityToResponseMapper.apply(bookshelfToDelete);
+        }
+
+    }
+
 }
 

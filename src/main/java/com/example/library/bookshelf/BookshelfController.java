@@ -33,4 +33,13 @@ public class BookshelfController {
             return new ResponseEntity(new CustomError(0, "Bookshelf not found", "The id you gave does not apply to bookshelf"),HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping(path = "bookshelf/{id}")
+    public ResponseEntity deleteBookshelf(@PathVariable long id){
+        try {
+            return new ResponseEntity(service.deleteBookshelf(id),HttpStatus.OK);
+        } catch (BookshelfNotFoundException e) {
+            return new ResponseEntity(new CustomError(0, "Bookshelf not found", "The id you gave does not apply to bookshelf"),HttpStatus.BAD_REQUEST);
+        }
+    }
 }
