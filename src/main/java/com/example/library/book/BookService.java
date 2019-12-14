@@ -21,7 +21,7 @@ public class BookService {
         Iterable<Book> bookIterable = repository.findAll();
         List<BookResponse> booksToReturn = new ArrayList<>();
         for (Book book: bookIterable) {
-            booksToReturn.add(BookEntityToResponseMapper())
+            booksToReturn.add(BookEntityToResponseMapper(book));
         }
     }
 
