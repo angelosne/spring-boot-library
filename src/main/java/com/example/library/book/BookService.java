@@ -60,4 +60,16 @@ public class BookService {
 
     }
 
+    public BookResponse deleteBook(long id) throws BookNotFoundException {
+        Optional<Book> retrievedBook = repository.findById(id);
+        if (retrievedBook.isEmpty())
+            throw new BookNotFoundException();
+
+        else {
+            Book bookToDelete = retrievedBook.get();
+            repository.delete(bookToDelete);
+        return bookEntityToResponseMapper.apply(bookToDelete);
+        }
+    }
+
 }

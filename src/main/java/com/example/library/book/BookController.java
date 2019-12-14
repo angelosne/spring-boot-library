@@ -14,24 +14,31 @@ public class BookController {
     }
 
     @GetMapping(path = "books")
-    public ResponseEntity getAllBooks(){
+    public ResponseEntity getAllBooks() {
         return new ResponseEntity(service.getAllBooks(), HttpStatus.OK);
     }
 
     @PostMapping(path = "book")
     public ResponseEntity createBook(@RequestBody BookInput input) {
-        return new ResponseEntity(service.createBook(input) , HttpStatus.CREATED);
+        return new ResponseEntity(service.createBook(input), HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "book/{id}")
     public ResponseEntity updateBook(@RequestBody BookInput input,
-                                     @PathVariable long id){
+                                     @PathVariable long id) {
         try {
-            return new ResponseEntity(service.updateBook(input,id),HttpStatus.OK);
+            return new ResponseEntity(service.updateBook(input, id), HttpStatus.OK);
         } catch (BookNotFoundException e) {
-            return new ResponseEntity(new CustomError(0,"Book not found","The id you gave does not apply to book"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(new CustomError(0, "Book not found", "The id you gave does not apply to book"), HttpStatus.BAD_REQUEST);
         }
     }
 
-
+    @DeleteMapping(path = "book/{id}")
+    public ResponseEntity deleteBook(@PathVariable long id) {
+        try {
+            return new ResponseEntity(service.deleteBook(id), HttpStatus.OK);
+        } catch (BookNotFoundException e) {
+            return new ResponseEntity(new CustomError(0, "Book not found", "The id you gave does not apply to book"), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
