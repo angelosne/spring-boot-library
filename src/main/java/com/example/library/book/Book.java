@@ -16,7 +16,7 @@ public class Book {
     private String authorLastname;
     private BookGenre genre;
     private int numberOfPages;
-    @OneToOne
+    @ManyToOne
     private Bookshelf bookshelf;
 
     public Book(String title, String description, String authorName, String authorLastname, BookGenre genre, int numberOfPages) {
