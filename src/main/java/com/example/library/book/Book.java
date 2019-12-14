@@ -1,10 +1,9 @@
 package com.example.library.book;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.example.library.bookshelf.Bookshelf;
+
+import javax.persistence.*;
 
 @Entity
 public class Book {
@@ -17,6 +16,8 @@ public class Book {
     private String authorLastname;
     private BookGenre genre;
     private int numberOfPages;
+    @OneToOne
+    private Bookshelf bookshelf;
 
     public Book(String title, String description, String authorName, String authorLastname, BookGenre genre, int numberOfPages) {
         this.title = title;
