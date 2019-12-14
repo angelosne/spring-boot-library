@@ -28,4 +28,10 @@ public class BookshelfService {
         return bookshelvesToReturn;
 
     }
+
+    public BookshelfResponse createBookshelf(BookshelfInput input){
+        Bookshelf createdBook = repository.save(bookshelfInputToEntityMapper.apply(input));
+        return bookshelfEntityToResponseMapper.apply(createdBook);
+    }
 }
+
