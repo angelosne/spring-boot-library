@@ -10,10 +10,10 @@ public class BookInput {
     private String authorName;
     private String authorLastname;
     private BookGenre genre;
-    private int numberOfPages;
+    private Integer numberOfPages;
     private Bookshelf bookshelf;
 
-    public BookInput(String title, String description, String authorName, String authorLastname, BookGenre genre, int numberOfPages, Bookshelf bookshelf) {
+    public BookInput(String title, String description, String authorName, String authorLastname, BookGenre genre, Integer numberOfPages, Bookshelf bookshelf) {
         this.title = title;
         this.description = description;
         this.authorName = authorName;
@@ -63,11 +63,11 @@ public class BookInput {
         this.genre = genre;
     }
 
-    public int getNumberOfPages() {
+    public Integer getNumberOfPages() {
         return numberOfPages;
     }
 
-    public void setNumberOfPages(int numberOfPages) {
+    public void setNumberOfPages(Integer numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
 
