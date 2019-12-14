@@ -17,12 +17,13 @@ public class BookService {
         this.bookInputToEntityMapper = bookInputToEntityMapper;
     }
 
-    public BookResponse getAllBooks(){
+    public List<BookResponse> getAllBooks(){
         Iterable<Book> bookIterable = repository.findAll();
         List<BookResponse> booksToReturn = new ArrayList<>();
         for (Book book: bookIterable) {
-            booksToReturn.add(BookEntityToResponseMapper(book));
+            booksToReturn.add(bookEntityToResponseMapper.apply(book));
         }
+        return booksToReturn;
     }
 
 }

@@ -1,7 +1,10 @@
 package com.example.library.book;
 
+import org.springframework.stereotype.Component;
+
 import java.util.function.Function;
 
+@Component
 public class BookEntityToResponseMapper implements Function<Book, BookResponse> {
     @Override
     public BookResponse apply(Book book) {
