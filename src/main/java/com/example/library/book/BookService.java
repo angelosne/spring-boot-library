@@ -72,4 +72,14 @@ public class BookService {
         }
     }
 
+    public List<BookResponse> selectBooksByGenre(BookGenre genre) {
+        Iterable<Book> bookIterable = repository.findAll();
+        List<BookResponse> booksToReturn = new ArrayList<>();
+        for (Book book : bookIterable) {
+            if (book.getGenre() == genre)
+                booksToReturn.add(bookEntityToResponseMapper.apply(book));
+        }
+        return booksToReturn;
+    }
+
 }

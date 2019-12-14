@@ -41,4 +41,9 @@ public class BookController {
             return new ResponseEntity(new CustomError(0, "Book not found", "The id you gave does not apply to book"), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping(path = "books/{genre}")
+    public ResponseEntity selectBooksByGenre(@PathVariable BookGenre genre) {
+        return new ResponseEntity(service.selectBooksByGenre(genre) , HttpStatus.OK);
+    }
 }
