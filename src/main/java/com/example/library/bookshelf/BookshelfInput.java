@@ -2,21 +2,21 @@ package com.example.library.bookshelf;
 
 public class BookshelfInput {
 
-    private int numberOfBooks;
+    private Integer numberOfBooks;
     private String country;
-    private int bookCapacity;
+    private Integer bookCapacity;
 
-    public BookshelfInput(int numberOfBooks, String country, int bookCapacity) {
+    public BookshelfInput(Integer numberOfBooks, String country, Integer bookCapacity) {
         this.numberOfBooks = numberOfBooks;
         this.country = country;
         this.bookCapacity = bookCapacity;
     }
 
-    public int getNumberOfBooks() {
+    public Integer getNumberOfBooks() {
         return numberOfBooks;
     }
 
-    public void setNumberOfBooks(int numberOfBooks) {
+    public void setNumberOfBooks(Integer numberOfBooks) {
         this.numberOfBooks = numberOfBooks;
     }
 
@@ -28,11 +28,11 @@ public class BookshelfInput {
         this.country = country;
     }
 
-    public int getBookCapacity() {
+    public Integer getBookCapacity() {
         return bookCapacity;
     }
 
-    public void setBookCapacity(int bookCapacity) {
+    public void setBookCapacity(Integer bookCapacity) {
         this.bookCapacity = bookCapacity;
     }
 }

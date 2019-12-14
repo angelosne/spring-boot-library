@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookshelfService {
@@ -19,7 +20,7 @@ public class BookshelfService {
         this.bookshelfInputToEntityMapper = bookshelfInputToEntityMapper;
     }
 
-    public List<BookshelfResponse> getAllBookshelves(){
+    public List<BookshelfResponse> getAllBookshelves() {
         Iterable<Bookshelf> bookIterable = repository.findAll();
         List<BookshelfResponse> bookshelvesToReturn = new ArrayList<>();
         for (Bookshelf bookshelf : bookIterable) {
@@ -29,9 +30,27 @@ public class BookshelfService {
 
     }
 
-    public BookshelfResponse createBookshelf(BookshelfInput input){
+    public BookshelfResponse createBookshelf(BookshelfInput input) {
         Bookshelf createdBook = repository.save(bookshelfInputToEntityMapper.apply(input));
         return bookshelfEntityToResponseMapper.apply(createdBook);
     }
+
+    public BookshelfResponse updateBookshelf(BookshelfInput input, long id) throws BookshelfNotFoundException {
+        Optional<Bookshelf> retrievedBookshelf = repository.findById(id);
+        if (retrievedBookshelf.isEmpty())
+            throw new BookshelfNotFoundException();
+        else {
+            Bookshelf bookshelfToUpdate = retrievedBookshelf.get();
+            if (input.getNumberOfBooks() != null)
+                bookshelfToUpdate.setNumberOfBooks(input.getNumberOfBooks());
+            if (input.getBookCapacity() != null)
+                bookshelfToUpdate.setBookCapacity(input.getBookCapacity());
+            if (input.getCountry() != null)
+                bookshelfToUpdate.setCountry(input.getCountry());
+            Bookshelf savedBookshelf = repository.save(bookshelfToUpdate);
+            return bookshelfEntityToResponseMapper.apply(savedBookshelf);
+        }
+    }
+
 }
 
