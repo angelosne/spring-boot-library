@@ -26,4 +26,11 @@ public class BookService {
         return booksToReturn;
     }
 
+    public BookResponse createBook(BookInput input){
+
+        Book bookToBeSaved = bookInputToEntityMapper.apply(input);
+
+        return bookEntityToResponseMapper.apply(repository.save(bookToBeSaved));
+    }
+
 }
