@@ -2,6 +2,7 @@ package com.example.library.book;
 
 import com.example.library.bookshelf.Bookshelf;
 import com.example.library.bookshelf.BookshelfNotFoundException;
+import com.example.library.bookshelf.BookshelfNullException;
 import com.example.library.bookshelf.BookshelfRepository;
 import org.springframework.stereotype.Service;
 
@@ -32,39 +33,45 @@ public class BookService {
         return booksToReturn;
     }
 
-    public BookResponse createBook(BookInput input) {
+    public BookResponse createBook(BookInput input) throws BookshelfNotFoundException {
+        Optional<Bookshelf> retrievedBookshelf = bookshelfRepository.findById(input.getBookshelfId());
+        if (retrievedBookshelf.isEmpty())
+            throw new BookshelfNotFoundException();
+
         Book bookToBeSaved = bookInputToEntityMapper.apply(input);
+        bookToBeSaved.setBookshelf(retrievedBookshelf.get());
         return bookEntityToResponseMapper.apply(repository.save(bookToBeSaved));
     }
 
-    public BookResponse updateBook(BookInput input, long id) throws BookNotFoundException, BookshelfNotFoundException {
-        Optional<Bookshelf> retrievedBookshelf= bookshelfRepository.findById(input.getBookshelfId());
-        if (retrievedBookshelf.isEmpty())
+    public BookResponse updateBook(BookInput input, Long id) throws BookNotFoundException, BookshelfNotFoundException {
+        Optional<Bookshelf> retrievedBookshelf = bookshelfRepository.findById(input.getBookshelfId());
+        if (input.getBookshelfId() != null && retrievedBookshelf.isEmpty()) {
             throw new BookshelfNotFoundException();
+        }
+
         Optional<Book> retrievedBook = repository.findById(id);
         if (retrievedBook.isEmpty())
             throw new BookNotFoundException();
 
-        else {
-            Book bookToUpdate = retrievedBook.get();
-            if (input.getTitle() != null)
-                bookToUpdate.setTitle(input.getTitle());
-            if (input.getDescription() != null)
-                bookToUpdate.setDescription(input.getDescription());
-            if (input.getAuthorName() != null)
-                bookToUpdate.setAuthorName(input.getAuthorName());
-            if (input.getAuthorLastname() != null)
-                bookToUpdate.setAuthorLastname(input.getAuthorLastname());
-            if (input.getGenre() != null)
-                bookToUpdate.setGenre(input.getGenre());
-            if (input.getBookshelfId() != null)
-                bookToUpdate.setBookshelf(retrievedBookshelf.get());
-            if (input.getNumberOfPages() != null)
-                bookToUpdate.setNumberOfPages(input.getNumberOfPages());
+        Book bookToUpdate = retrievedBook.get();
+        if (input.getTitle() != null)
+            bookToUpdate.setTitle(input.getTitle());
+        if (input.getDescription() != null)
+            bookToUpdate.setDescription(input.getDescription());
+        if (input.getAuthorName() != null)
+            bookToUpdate.setAuthorName(input.getAuthorName());
+        if (input.getAuthorLastname() != null)
+            bookToUpdate.setAuthorLastname(input.getAuthorLastname());
+        if (input.getGenre() != null)
+            bookToUpdate.setGenre(input.getGenre());
+        if (input.getBookshelfId() != null && retrievedBookshelf.isPresent())
+            bookToUpdate.setBookshelf(retrievedBookshelf.get());
+        if (input.getNumberOfPages() != null)
+            bookToUpdate.setNumberOfPages(input.getNumberOfPages());
 
-            Book savedBook = repository.save(bookToUpdate);
-            return bookEntityToResponseMapper.apply(savedBook);
-        }
+        Book savedBook = repository.save(bookToUpdate);
+        return bookEntityToResponseMapper.apply(savedBook);
+
 
     }
 

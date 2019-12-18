@@ -2,6 +2,7 @@ package com.example.library.book;
 
 import com.example.library.CustomError;
 import com.example.library.bookshelf.BookshelfNotFoundException;
+import com.example.library.bookshelf.BookshelfNullException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,11 @@ public class BookController {
 
     @PostMapping(path = "book")
     public ResponseEntity createBook(@RequestBody BookInput input) {
-        return new ResponseEntity(service.createBook(input), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity(service.createBook(input), HttpStatus.CREATED);
+        } catch (BookshelfNotFoundException e) {
+            return new ResponseEntity(new CustomError(0, "Bookshelf not found", "The id you gave does not apply to bookshelf"),HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PatchMapping(path = "book/{id}")

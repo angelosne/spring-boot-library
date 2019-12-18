@@ -11,7 +11,7 @@ public class BookInput {
     private String authorLastname;
     private BookGenre genre;
     private Integer numberOfPages;
-    private long bookshelfId;
+    private Long bookshelfId;
 
     public BookInput(String title, String description, String authorName, String authorLastname, BookGenre genre, Integer numberOfPages, long bookshelfId) {
         this.title = title;
