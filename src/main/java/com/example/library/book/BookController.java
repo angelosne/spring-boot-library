@@ -1,6 +1,7 @@
 package com.example.library.book;
 
 import com.example.library.CustomError;
+import com.example.library.bookshelf.BookshelfNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,8 @@ public class BookController {
             return new ResponseEntity(service.updateBook(input, id), HttpStatus.OK);
         } catch (BookNotFoundException e) {
             return new ResponseEntity(new CustomError(0, "Book not found", "The id you gave does not apply to book"), HttpStatus.BAD_REQUEST);
+        } catch (BookshelfNotFoundException e) {
+            return new ResponseEntity(new CustomError(0, "Bookshelf not found", "The id you gave does not apply to bookshelf"),HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -21,6 +21,12 @@ public class BookshelfController {
 
     @PostMapping(path = "bookshelf")
     public ResponseEntity createBookshelf(@RequestBody BookshelfInput input) {
+        if (input.getBookCapacity()< input.getNumberOfBooks())
+            return new ResponseEntity(
+                    new CustomError(0,
+                            "Wrong Input",
+                            "Books can not be more than Capacity"),
+                    HttpStatus.BAD_REQUEST);
         return new ResponseEntity(service.createBookshelf(input), HttpStatus.CREATED);
     }
 

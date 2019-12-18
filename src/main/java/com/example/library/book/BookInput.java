@@ -11,16 +11,16 @@ public class BookInput {
     private String authorLastname;
     private BookGenre genre;
     private Integer numberOfPages;
-    private Bookshelf bookshelf;
+    private long bookshelfId;
 
-    public BookInput(String title, String description, String authorName, String authorLastname, BookGenre genre, Integer numberOfPages, Bookshelf bookshelf) {
+    public BookInput(String title, String description, String authorName, String authorLastname, BookGenre genre, Integer numberOfPages, long bookshelfId) {
         this.title = title;
         this.description = description;
         this.authorName = authorName;
         this.authorLastname = authorLastname;
         this.genre = genre;
         this.numberOfPages = numberOfPages;
-        this.bookshelf = bookshelf;
+        this.bookshelfId = bookshelfId;
     }
 
     public String getTitle() {
@@ -71,11 +71,11 @@ public class BookInput {
         this.numberOfPages = numberOfPages;
     }
 
-    public Bookshelf getBookshelf() {
-        return bookshelf;
+    public Long getBookshelfId() {
+        return bookshelfId;
     }
 
-    public void setBookshelf(Bookshelf bookshelf) {
-        this.bookshelf = bookshelf;
+    public void setBookshelfId(Long bookshelfId) {
+        this.bookshelfId = bookshelfId;
     }
 }

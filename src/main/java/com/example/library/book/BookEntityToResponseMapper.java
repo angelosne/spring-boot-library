@@ -15,7 +15,8 @@ public class BookEntityToResponseMapper implements Function<Book, BookResponse> 
                 mapFullName(book),
                 book.getGenre(),
                 book.getNumberOfPages(),
-                mapBookSize(book.getNumberOfPages())
+                mapBookSize(book.getNumberOfPages()),
+                book.getBookshelf()
         );
     }
 

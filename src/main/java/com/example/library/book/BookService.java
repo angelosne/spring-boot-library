@@ -1,5 +1,8 @@
 package com.example.library.book;
 
+import com.example.library.bookshelf.Bookshelf;
+import com.example.library.bookshelf.BookshelfNotFoundException;
+import com.example.library.bookshelf.BookshelfRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,11 +12,13 @@ import java.util.Optional;
 @Service
 public class BookService {
     private BookRepository repository;
+    private BookshelfRepository bookshelfRepository;
     private BookEntityToResponseMapper bookEntityToResponseMapper;
     private BookInputToEntityMapper bookInputToEntityMapper;
 
-    public BookService(BookRepository repository, BookEntityToResponseMapper bookEntityToResponseMapper, BookInputToEntityMapper bookInputToEntityMapper) {
+    public BookService(BookRepository repository, BookshelfRepository bookshelfRepository, BookEntityToResponseMapper bookEntityToResponseMapper, BookInputToEntityMapper bookInputToEntityMapper) {
         this.repository = repository;
+        this.bookshelfRepository = bookshelfRepository;
         this.bookEntityToResponseMapper = bookEntityToResponseMapper;
         this.bookInputToEntityMapper = bookInputToEntityMapper;
     }
@@ -32,7 +37,10 @@ public class BookService {
         return bookEntityToResponseMapper.apply(repository.save(bookToBeSaved));
     }
 
-    public BookResponse updateBook(BookInput input, long id) throws BookNotFoundException {
+    public BookResponse updateBook(BookInput input, long id) throws BookNotFoundException, BookshelfNotFoundException {
+        Optional<Bookshelf> retrievedBookshelf= bookshelfRepository.findById(input.getBookshelfId());
+        if (retrievedBookshelf.isEmpty())
+            throw new BookshelfNotFoundException();
         Optional<Book> retrievedBook = repository.findById(id);
         if (retrievedBook.isEmpty())
             throw new BookNotFoundException();
@@ -49,8 +57,8 @@ public class BookService {
                 bookToUpdate.setAuthorLastname(input.getAuthorLastname());
             if (input.getGenre() != null)
                 bookToUpdate.setGenre(input.getGenre());
-            if (input.getBookshelf() != null)
-                bookToUpdate.setBookshelf(input.getBookshelf());
+            if (input.getBookshelfId() != null)
+                bookToUpdate.setBookshelf(retrievedBookshelf.get());
             if (input.getNumberOfPages() != null)
                 bookToUpdate.setNumberOfPages(input.getNumberOfPages());
 

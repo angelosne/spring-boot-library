@@ -1,5 +1,6 @@
 package com.example.library.book;
 
+import com.example.library.bookshelf.Bookshelf;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
@@ -16,7 +17,9 @@ public class BookInputToEntityMapper implements Function<BookInput , Book> {
                 bookInput.getAuthorLastname(),
                 bookInput.getGenre(),
                 bookInput.getNumberOfPages(),
-                bookInput.getBookshelf()
+                null
         );
     }
+
+
 }

@@ -12,8 +12,9 @@ public class BookResponse {
     private BookGenre genre;
     private int numberOfPages;
     private BookSize size;
+    private Bookshelf bookshelf;
 
-    public BookResponse(long id, String title, String description, String authorFullName, BookGenre genre, int numberOfPages, BookSize size) {
+    public BookResponse(long id, String title, String description, String authorFullName, BookGenre genre, int numberOfPages, BookSize size, Bookshelf bookshelf) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -21,6 +22,7 @@ public class BookResponse {
         this.genre = genre;
         this.numberOfPages = numberOfPages;
         this.size = size;
+        this.bookshelf = bookshelf;
     }
 
     public long getId() {
@@ -77,5 +79,13 @@ public class BookResponse {
 
     public void setSize(BookSize size) {
         this.size = size;
+    }
+
+    public Bookshelf getBookshelf() {
+        return bookshelf;
+    }
+
+    public void setBookshelf(Bookshelf bookshelf) {
+        this.bookshelf = bookshelf;
     }
 }
