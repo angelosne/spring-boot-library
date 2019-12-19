@@ -44,16 +44,14 @@ public class BookService {
     }
 
     public BookResponse updateBook(BookInput input, Long id) throws BookNotFoundException, BookshelfNotFoundException {
-        Optional<Bookshelf> retrievedBookshelf = bookshelfRepository.findById(input.getBookshelfId());
-        if (input.getBookshelfId() != null && retrievedBookshelf.isEmpty()) {
-            throw new BookshelfNotFoundException();
-        }
 
         Optional<Book> retrievedBook = repository.findById(id);
+
         if (retrievedBook.isEmpty())
             throw new BookNotFoundException();
 
         Book bookToUpdate = retrievedBook.get();
+        bookToUpdate.setBookshelf(retrievedBook.get().getBookshelf());
         if (input.getTitle() != null)
             bookToUpdate.setTitle(input.getTitle());
         if (input.getDescription() != null)
@@ -64,8 +62,14 @@ public class BookService {
             bookToUpdate.setAuthorLastname(input.getAuthorLastname());
         if (input.getGenre() != null)
             bookToUpdate.setGenre(input.getGenre());
-        if (input.getBookshelfId() != null && retrievedBookshelf.isPresent())
+        if (input.getBookshelfId() != null) {
+            Optional<Bookshelf> retrievedBookshelf = bookshelfRepository.findById(input.getBookshelfId());
+            if (retrievedBookshelf.isEmpty()) {
+                throw new BookshelfNotFoundException();
+            }
             bookToUpdate.setBookshelf(retrievedBookshelf.get());
+        }
+
         if (input.getNumberOfPages() != null)
             bookToUpdate.setNumberOfPages(input.getNumberOfPages());
 
